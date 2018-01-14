@@ -2,8 +2,8 @@
   <custom-link :link="link" 
     class="mdc-drawer-item mdc-list-item" 
     :class="classes" :style="styles"
-    @click.native="onClick">
-    <span class="mdc-list-item__start-detail" v-if="hasStartDetail">
+    @click="onClick">
+    <span class="mdc-list-item__graphic" v-if="hasStartDetail">
       <slot name="start-detail">
         <i class="material-icons" aria-hidden="true">{{startIcon}}</i>
       </slot>

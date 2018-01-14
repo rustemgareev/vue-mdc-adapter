@@ -1,8 +1,7 @@
-export const CustomLink = {
-  name: 'custom-link',
+export const CustomButton = {
+  name: 'custom-button',
   functional: true,
   props: {
-    tag: { type: String, default: 'a' },
     link : Object,
   },
   render (h, context) {
@@ -13,20 +12,27 @@ export const CustomLink = {
       // router-link case
       element = context.parent.$root.$options.components['router-link'] 
       data.props = Object.assign({tag: context.props.tag}, context.props.link)
+      data.attrs.role = 'button'
       if (data.on.click) {
         data.nativeOn = {click: data.on.click }
       }
-    } else {
-      // element fallback
-      element = context.props.tag 
+    } else if (data.attrs && data.attrs.href) {
+      // href case
+      element = 'a' 
+      data.attrs.role = 'button'
+    }  else {
+      // button fallback
+      element = 'button'
     } 
 
     return h(element, data, context.children)
   }
 }
 
-export const CustomLinkMixin = {
+export const CustomButtonMixin = {
   props: {
+    href: String,
+    disabled: Boolean,
     to: [String, Object],
     exact: Boolean,
     append: Boolean,
@@ -47,6 +53,6 @@ export const CustomLinkMixin = {
     }
   },
   components : { 
-    CustomLink 
+    CustomButton 
   }
 }

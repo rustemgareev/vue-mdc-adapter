@@ -10,7 +10,7 @@ var vm = new Vue({
     buttonDisabled: false
   },
   methods: {
-    onClick () {...} 
+    onClick () {...}
   }
 })
 ```
@@ -27,6 +27,7 @@ var vm = new Vue({
 | prop | Type | Default | Description |
 |-------|------|---------|-------------|
 |`disabled`|String|| disable the button |
+|`accent`|Boolean|| secondary color theme |
 |`raised`| Boolean|| a contained button that is elevated upon the surface |
 |`unelevated`| Boolean|| a contained button that is flush with the surface |
 |`stroked`| Boolean|| a contained button that is flush with the surface and has a visible border(*)|
@@ -36,8 +37,14 @@ var vm = new Vue({
 |`event-target`|Object| vm.$root | optional event target, defaults to root bus |
 |`event-args`|Array| [] | optional event args |
 |`href`|String|| link's href, renders anchor (see notes below) | 
+|`to`|String, Object| undefined | router-link property _(*)_ |
+|`replace`|Boolean| false | router-link property _(*)_ |
+|`append`|Boolean| false | router-link property _(*)_ |
+|`exact`|Boolean| false | router-link property _(*)_ |
+|`active-class`|String| router-link-active | router-link property _(*)_ |
+|`exact-active-class`|String| router-link-exact-active | router-link property _(*)_ |
 
-> (*) initializer attribute, not dynamic property
+> _(*)_ Requires [vue-router](https://router.vuejs.org)
 
 ### text buttons
 
@@ -71,13 +78,25 @@ var vm = new Vue({
 
 ### Link buttons
 
+#### simple Link
+
+Using the href attribute will render `<a role="button" href="...">`
+
 ```html
 <mdc-button href="#">Home</mdc-button>
 ```
 
-Using the href attribute will render `<a role="button" href="...">`
+#### router-link
 
-> Accessibility Warning:
+If the `to` property is defined, the item behaves as a
+[router-link](https://router.vuejs.org/en/api/router-link.html)
+
+```html
+<mdc-button to="/home">Home</mdc-button>
+```
+
+#### Accessibility Warning:
+
 > Buttons are expected to be triggered using the Space or Enter key, 
 > while links are expected to be triggered using the Enter key. 
 > Additionally, button and links have different behaviors on right click.
@@ -87,8 +106,19 @@ You might want to keep button behavior and do the navigation programatically:
 
 ```html
 <mdc-button @click="location.href='#'">Home</mdc-button>
-``` 
+<mdc-button @click="$router.push(...)">Home</mdc-button>
+```
+
+### Triggering events
+
+```html
+ <mdc-button event='my-event'>Do Something</mdc-button>
+```
+
+```javascript
+ // register event from some component context
+ this.$root.$on('my-event', () => doSomething())
+```
 
 ### Reference
 - <https://material.io/guidelines/components/buttons.html>
-
